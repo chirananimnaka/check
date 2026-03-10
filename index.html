@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expenza | Elevate Your Finances</title>
-    <meta name="description" content="A premium, glassmorphic expense tracker to manage your wealth with style.">
+    <title>Prism | Future-Proof Your Finances</title>
+    <meta name="description" content="A premium, glassmorphic expense tracker with advanced analytics and mesh design.">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
     <!-- Lucide Icons -->
@@ -16,156 +18,174 @@
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
-    <div class="app-container">
-        <!-- Sidebar / Navigation -->
-        <nav class="sidebar">
-            <div class="logo">
-                <i data-lucide="wallet" class="logo-icon"></i>
-                <span class="logo-text">Expenza</span>
-            </div>
-            <ul class="nav-links">
-                <li class="active"><i data-lucide="layout-dashboard"></i><span>Dashboard</span></li>
-                <li><i data-lucide="arrow-up-right"></i><span>Income</span></li>
-                <li><i data-lucide="arrow-down-left"></i><span>Expenses</span></li>
-                <li><i data-lucide="pie-chart"></i><span>Analytics</span></li>
-                <li><i data-lucide="settings"></i><span>Settings</span></li>
-            </ul>
-            <div class="user-profile">
-                <div class="avatar">JD</div>
-                <div class="user-info">
-                    <span class="user-name">John Doe</span>
-                    <span class="user-status">Pro Member</span>
+    <!-- Abstract Background -->
+    <div class="bg-mesh">
+        <div class="bg-blob blob-1"></div>
+        <div class="bg-blob blob-2"></div>
+    </div>
+
+    <div class="app-wrapper">
+        <!-- Floating Navbar -->
+        <nav class="navbar">
+            <a href="#" class="brand">
+                <div class="brand-icon">
+                    <i data-lucide="layers"></i>
                 </div>
+                <span class="brand-name">Prism</span>
+            </a>
+            <ul class="nav-links">
+                <li class="active">Dashboard</li>
+                <li>Analytics</li>
+                <li>Budget</li>
+                <li>Settings</li>
+            </ul>
+            <div class="user-pill">
+                <div class="avatar">JD</div>
+                <span class="user-name">John Doe</span>
+                <i data-lucide="chevron-down" size="14"></i>
             </div>
         </nav>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <header class="main-header">
-                <div>
-                    <h1>Good Evening, John</h1>
-                    <p class="subtitle">Here's what's happening with your money today.</p>
-                </div>
-                <button id="open-modal-btn" class="btn-primary">
-                    <i data-lucide="plus"></i>
-                    <span>Add Transaction</span>
-                </button>
-            </header>
+        <!-- Header -->
+        <header class="main-header">
+            <div class="header-text">
+                <h1>Elevate Your Wealth.</h1>
+                <p>Welcome back, John. Here's your financial snapshot for today.</p>
+            </div>
+            <button id="open-modal-btn" class="btn-primary">
+                <i data-lucide="plus-circle"></i>
+                <span>Add Transaction</span>
+            </button>
+        </header>
 
-            <!-- Stats Overview -->
-            <section class="stats-grid">
-                <div class="stat-card balance-card">
-                    <div class="card-header">
-                        <span>Total Balance</span>
-                        <i data-lucide="trending-up" class="text-indigo"></i>
-                    </div>
-                    <div class="card-body">
-                        <h2 id="total-balance">$0.00</h2>
-                        <span class="trend positive">+12.5% from last month</span>
+        <!-- Stats Grid -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="card-label">
+                    <span>Net Balance</span>
+                    <i data-lucide="wallet" class="text-blue"></i>
+                </div>
+                <div id="total-balance" class="card-value">$0.00</div>
+                <div class="card-footer">
+                    <span class="trend">+12.4%</span>
+                    <span class="text-muted">vs last month</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="card-label">
+                    <span>Total Income</span>
+                    <i data-lucide="trending-up" class="text-emerald"></i>
+                </div>
+                <div id="total-income" class="card-value text-emerald">$0.00</div>
+                <div class="card-footer">
+                    <span class="text-muted">Direct Deposit Active</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="card-label">
+                    <span>Total Expenses</span>
+                    <i data-lucide="trending-down" class="text-rose"></i>
+                </div>
+                <div id="total-expense" class="card-value text-rose">$0.00</div>
+                <div class="card-footer">
+                    <span class="text-muted">42 transactions this month</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Analytics & Budget -->
+        <div class="analytics-grid">
+            <section class="analytics-card">
+                <div class="card-header">
+                    <h3>Spending Insight</h3>
+                    <div class="actions">
+                        <i data-lucide="more-horizontal" class="text-muted"></i>
                     </div>
                 </div>
-                <div class="stat-card income-card">
-                    <div class="card-header">
-                        <span>Total Income</span>
-                        <i data-lucide="arrow-up-circle" class="text-emerald"></i>
-                    </div>
-                    <div class="card-body">
-                        <h2 id="total-income" class="text-emerald">$0.00</h2>
-                    </div>
-                </div>
-                <div class="stat-card expense-card">
-                    <div class="card-header">
-                        <span>Total Expenses</span>
-                        <i data-lucide="arrow-down-circle" class="text-rose"></i>
-                    </div>
-                    <div class="card-body">
-                        <h2 id="total-expense" class="text-rose">$0.00</h2>
-                    </div>
+                <div class="canvas-container">
+                    <canvas id="spendingChart"></canvas>
                 </div>
             </section>
 
-            <!-- Middle Section: Chart & Budget -->
-            <section class="content-row">
-                <div class="card chart-container">
-                    <h3>Spending Overview</h3>
-                    <div class="canvas-wrapper">
-                        <canvas id="spendingChart"></canvas>
-                    </div>
+            <section class="analytics-card budget-overview">
+                <div class="card-header">
+                    <h3>Budget Status</h3>
+                    <span id="budget-percentage">0%</span>
                 </div>
-                <div class="card budget-container">
-                    <div class="card-header-flex">
-                        <h3>Monthly Budget</h3>
-                        <span id="budget-percentage">0%</span>
+                <div class="progress-container">
+                    <div class="progress-header">
+                        <span class="text-muted">Spent: <span id="spent-amt" class="text-primary">$0</span></span>
+                        <span class="text-muted">Limit: <span id="budget-amt" class="text-primary">$5,000</span></span>
                     </div>
                     <div class="progress-bar-bg">
-                        <div id="budget-progress" class="progress-bar-fill" style="width: 0%"></div>
+                        <div id="budget-progress" class="progress-bar-fill"></div>
                     </div>
-                    <div class="budget-details">
-                        <span>Spent: <span id="spent-amt">$0</span></span>
-                        <span>Budget: <span id="budget-amt">$5000</span></span>
+                </div>
+                <div class="mini-stats">
+                    <div class="mini-item">
+                        <span class="text-muted">Essential</span>
+                        <span class="font-bold">64%</span>
                     </div>
-                    <div class="quick-stats">
-                        <div class="q-stat">
-                            <span class="label">Food</span>
-                            <span class="val">25%</span>
-                        </div>
-                        <div class="q-stat">
-                            <span class="label">Rent</span>
-                            <span class="val">50%</span>
-                        </div>
-                        <div class="q-stat">
-                            <span class="label">Others</span>
-                            <span class="val">25%</span>
-                        </div>
+                    <div class="mini-item">
+                        <span class="text-muted">Lifestyle</span>
+                        <span class="font-bold">22%</span>
+                    </div>
+                    <div class="mini-item">
+                        <span class="text-muted">Savings</span>
+                        <span class="font-bold">14%</span>
                     </div>
                 </div>
             </section>
+        </div>
 
-            <!-- Bottom Section: Recent Transactions -->
-            <section class="transactions-section">
-                <div class="section-header">
-                    <h3>Recent Transactions</h3>
-                    <button class="btn-text">View All</button>
+        <!-- Transactions -->
+        <section class="transactions-section">
+            <div class="card-header">
+                <h3>Recent Activity</h3>
+                <button class="text-blue font-bold no-bg" style="background: none; border: none; cursor: pointer;">View
+                    All History</button>
+            </div>
+            <div id="transaction-list" class="transaction-list">
+                <!-- Injected via JS -->
+                <div class="empty-state" style="text-align: center; padding: 3rem; color: var(--text-muted);">
+                    <i data-lucide="loader" class="animate-spin"></i>
+                    <p>Fetching your latest transactions...</p>
                 </div>
-                <div id="transaction-list" class="transaction-list">
-                    <!-- Transactions will be injected here -->
-                    <div class="empty-state">
-                        <i data-lucide="receipt"></i>
-                        <p>No transactions yet. Start by adding one!</p>
-                    </div>
-                </div>
-            </section>
-        </main>
+            </div>
+        </section>
     </div>
 
-    <!-- Add Transaction Modal -->
+    <!-- Modal -->
     <div id="transaction-modal" class="modal">
-        <div class="modal-content glass">
+        <div class="modal-content">
             <div class="modal-header">
                 <h2>New Transaction</h2>
-                <button id="close-modal-btn" class="btn-icon"><i data-lucide="x"></i></button>
+                <button id="close-modal-btn" class="close-btn">
+                    <i data-lucide="x"></i>
+                </button>
             </div>
             <form id="transaction-form">
-                <div class="form-group">
-                    <label for="description">Description</label>
-                    <input type="text" id="description" placeholder="e.g. Starbucks Coffee" required>
+                <div class="input-group">
+                    <label for="description">Transaction Description</label>
+                    <input type="text" id="description" placeholder="e.g. Apple Store" required>
                 </div>
-                <div class="form-row">
-                    <div class="form-group">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="input-group">
                         <label for="amount">Amount ($)</label>
                         <input type="number" id="amount" step="0.01" placeholder="0.00" required>
                     </div>
-                    <div class="form-group">
-                        <label for="type">Type</label>
+                    <div class="input-group">
+                        <label for="type">Category Type</label>
                         <select id="type">
                             <option value="expense">Expense</option>
                             <option value="income">Income</option>
                         </select>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="category">Category</label>
+                <div class="input-group">
+                    <label for="category">Market Category</label>
                     <select id="category">
                         <option value="Food & Drinks">Food & Drinks</option>
                         <option value="Shopping">Shopping</option>
@@ -176,7 +196,7 @@
                         <option value="Others">Others</option>
                     </select>
                 </div>
-                <button type="submit" class="btn-submit">Add Transaction</button>
+                <button type="submit" class="btn-submit">Confirm Transaction</button>
             </form>
         </div>
     </div>
@@ -186,4 +206,5 @@
         lucide.createIcons();
     </script>
 </body>
+
 </html>

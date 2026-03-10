@@ -14,6 +14,8 @@ const closeModalBtn = document.getElementById('close-modal-btn');
 const budgetProgress = document.getElementById('budget-progress');
 const budgetPercentEl = document.getElementById('budget-percentage');
 const spentAmtEl = document.getElementById('spent-amt');
+const budgetAmtEl = document.getElementById('budget-amt');
+
 
 // --- Icons Mapping ---
 const categoryIcons = {
@@ -27,13 +29,13 @@ const categoryIcons = {
 };
 
 const categoryColors = {
-    'Food & Drinks': '#f59e0b', // Amber
-    'Shopping': '#ec4899', // Pink
-    'Housing': '#6366f1', // Indigo
-    'Transport': '#06b6d4', // Cyan
-    'Health': '#10b981', // Emerald
-    'Entertainment': '#8b5cf6', // Violet
-    'Others': '#94a3b8'  // Slate
+    'Food & Drinks': 'hsl(35, 92%, 50%)', // Amber
+    'Shopping': 'hsl(330, 81%, 60%)',    // Pink
+    'Housing': 'hsl(263, 70%, 50%)',     // Purple
+    'Transport': 'hsl(199, 89%, 48%)',    // Blue
+    'Health': 'hsl(150, 100%, 40%)',     // Emerald
+    'Entertainment': 'hsl(280, 70%, 60%)', // Violet
+    'Others': 'hsl(215, 15%, 45%)'       // Slate
 };
 
 // --- Initialization ---
@@ -50,6 +52,7 @@ function init() {
     }
     updateUI();
     initChart();
+    if (budgetAmtEl) budgetAmtEl.innerText = `$${monthlyBudget.toLocaleString()}`;
 }
 
 // --- Logic ---
@@ -57,17 +60,17 @@ function addTransaction(e) {
     e.preventDefault();
 
     const description = document.getElementById('description').value;
-    const amount = +document.getElementById('amount').value;
+    const amountValue = +document.getElementById('amount').value;
     const type = document.getElementById('type').value;
     const category = document.getElementById('category').value;
 
     const transaction = {
         id: generateID(),
         description,
-        amount: type === 'expense' ? -amount : amount,
+        amount: type === 'expense' ? -amountValue : amountValue,
         type,
         category,
-        date: new Date().toLocaleDateString()
+        date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
     };
 
     transactions.push(transaction);
@@ -96,9 +99,9 @@ function updateUI() {
         amounts.filter(item => item < 0).reduce((acc, item) => (acc += item), 0) * -1
     ).toFixed(2);
 
-    balanceEl.innerText = `$${total}`;
-    incomeEl.innerText = `$${income}`;
-    expenseEl.innerText = `$${expense}`;
+    balanceEl.innerText = `$${parseFloat(total).toLocaleString()}`;
+    incomeEl.innerText = `$${parseFloat(income).toLocaleString()}`;
+    expenseEl.innerText = `$${parseFloat(expense).toLocaleString()}`;
 
     // 3. Update Budget Progress
     const expenseNum = parseFloat(expense);
@@ -108,9 +111,9 @@ function updateUI() {
     spentAmtEl.innerText = `$${expenseNum.toLocaleString()}`;
 
     // Update colors based on budget health
-    if (percentage > 90) budgetProgress.style.background = 'var(--rose)';
-    else if (percentage > 70) budgetProgress.style.background = '#f59e0b';
-    else budgetProgress.style.background = 'linear-gradient(to right, var(--primary), var(--indigo))';
+    if (percentage > 90) budgetProgress.style.background = 'var(--accent-rose)';
+    else if (percentage > 70) budgetProgress.style.background = 'hsl(35, 92%, 50%)';
+    else budgetProgress.style.background = 'linear-gradient(to right, var(--primary), var(--accent-blue))';
 
     // 4. Re-init Chart
     updateChart();
@@ -138,17 +141,17 @@ function renderTransactions() {
         item.classList.add('transaction-item');
 
         const categoryIcon = categoryIcons[transaction.category] || 'layers';
-        const categoryColor = categoryColors[transaction.category] || '#94a3b8';
+        const categoryColor = categoryColors[transaction.category] || 'hsl(215, 15%, 45%)';
 
         item.innerHTML = `
-            <div class="item-icon" style="background: ${categoryColor}15; color: ${categoryColor}">
+            <div class="icon-box" style="background: ${categoryColor}20; color: ${categoryColor}">
                 <i data-lucide="${categoryIcon}"></i>
             </div>
-            <div class="item-info">
-                <span class="item-title">${transaction.description}</span>
-                <span class="item-category">${transaction.category} • ${transaction.date}</span>
+            <div class="info-box">
+                <span class="title">${transaction.description}</span>
+                <span class="meta">${transaction.category} • ${transaction.date}</span>
             </div>
-            <div class="item-amount ${colorClass}">
+            <div class="amount-box ${colorClass}">
                 ${sign}$${Math.abs(transaction.amount).toFixed(2)}
             </div>
         `;
@@ -168,7 +171,6 @@ let spendingChart;
 function initChart() {
     const ctx = document.getElementById('spendingChart').getContext('2d');
 
-    // Default config
     spendingChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
@@ -176,8 +178,10 @@ function initChart() {
             datasets: [{
                 data: [],
                 backgroundColor: [],
-                borderWidth: 0,
-                hoverOffset: 20
+                borderWidth: 2,
+                borderColor: 'rgba(255, 255, 255, 0.05)',
+                hoverOffset: 15,
+                borderRadius: 8
             }]
         },
         options: {
@@ -185,16 +189,25 @@ function initChart() {
             maintainAspectRatio: false,
             plugins: {
                 legend: {
-                    position: 'right',
+                    position: 'bottom',
                     labels: {
-                        color: '#94a3b8',
-                        font: { family: 'Outfit', size: 12 },
+                        color: 'hsl(215, 20%, 65%)',
+                        font: { family: 'Outfit', size: 11, weight: '500' },
                         padding: 20,
-                        usePointStyle: true
+                        usePointStyle: true,
+                        pointStyle: 'circle'
                     }
+                },
+                tooltip: {
+                    backgroundColor: 'hsl(222, 47%, 11%)',
+                    titleFont: { family: 'Outfit', size: 14 },
+                    bodyFont: { family: 'Outfit', size: 13 },
+                    padding: 12,
+                    cornerRadius: 12,
+                    displayColors: true
                 }
             },
-            cutout: '70%'
+            cutout: '75%'
         }
     });
 
